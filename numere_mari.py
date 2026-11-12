@@ -17,6 +17,21 @@ def suma(num1, num2):
         j-=1
     return resultado.lstrip("0") or "0"
 
+def multiplicacion(num1, num2):
+    resultado = [0]*(len(num1)+len(num2))
+
+    for i in range(len(num1) - 1, -1, -1):
+        llevada = 0
+
+        for j in range(len(num2) - 1, -1, -1):
+            producto = int(num1[i]) * int(num2[j])
+            total = producto + resultado[i+j+1] + llevada
+            resultado[i+j+1] = total % 10
+            llevada = total // 10
+        resultado[i] += llevada
+    numero_final = "".join(str(digito) for digito in resultado)
+    return numero_final.lstrip("0") or "0"
+
 #Read numbers from txt file
 try: 
     with open("numere.txt", "r") as file:
@@ -32,5 +47,7 @@ try:
         print("Second number", num2)
 
         print("SUM:", suma(num1, num2))
+
+        print("MUL:", multiplicacion(num1, num2))
 except FileNotFoundError:
     print("Error: No hay documento txt")
